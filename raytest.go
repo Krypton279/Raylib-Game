@@ -6,7 +6,7 @@ import "math/rand"
 import "math"
 
 var height = 840
-var width = 1040 
+var width = 1440 
 
 func map_algorithm(seed int,num int)([9]int){
 	seeder := rand.NewSource(int64(seed))
@@ -51,13 +51,17 @@ func main() {
 	camera.Rotation = float32(0)
 	rl.InitWindow(int32(width),int32(height),"Test")
 	rl.SetTargetFPS(60)
+	
+	// Loading Images and Textures
+	player_image := rl.LoadImage("player.png")
+	player_texture := rl.LoadTextureFromImage(player_image)
+
 	for !rl.WindowShouldClose() {
 
 		//    Mapper and Movement Code Begin
 		rl.BeginDrawing()
 		rl.BeginMode2D(*camera)
 		rl.ClearBackground(rl.Black)
-		rl.DrawRectangle(int32(rectangle.X),int32(rectangle.Y),10,10,rl.Red)
 		if true {
 			fc = quad_origin_relative(int(rectangle.X),int(rectangle.Y))
 			sd = map_algorithm(rand.Intn(40000000),10)
@@ -80,6 +84,7 @@ func main() {
 			zx[8] = quad_origin_relative(int(rectangle.X),int(rectangle.Y-float32(height)))
 			rl.DrawText(strconv.Itoa(m[7]),int32(zx[8][0]+(width/2)),int32(zx[8][1]+(height/2)),30,rl.RayWhite)
 		}
+		rl.DrawTexture(player_texture,int32(rectangle.X) - 25,int32(rectangle.Y) - 35,rl.White)
 		x = int(rectangle.X)
 		y = int(rectangle.Y)
 		if rl.IsKeyDown(68){
