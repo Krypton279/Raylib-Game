@@ -55,7 +55,11 @@ func main() {
 	// Loading Images and Textures
 	player_image := rl.LoadImage("player.png")
 	player_texture := rl.LoadTextureFromImage(player_image)
+	wand_image := rl.LoadImage("starter_wand.png")
+	wand_texture := rl.LoadTextureFromImage(wand_image)
 
+	// Loading Images and Textures End
+	// Game Loop Start
 	for !rl.WindowShouldClose() {
 
 		//    Mapper and Movement Code Begin
@@ -111,9 +115,7 @@ func main() {
 		// Additional Stuff Start
 		// rl.DrawRectangle(int32(x)+8,int32(y),25,5,rl.Green)
 		rect := rl.Rectangle{float32(x+8),float32(y),25,6}
-		vect := rl.Vector2{0 ,0}
-		// rl.DrawRectangleRec(rect,rl.Green);
-		rl.DrawRectanglePro(rect,vect ,float32((-1)*(180/math.Pi)*(math.Atan2(float64((rl.GetMouseX()-int32((width/2)-5))),float64(rl.GetMouseY()-int32((height/2)-5))))+90),rl.Green)
+		rl.DrawTextureEx(wand_texture,rl.Vector2{rect.X,rect.Y-5},float32((-1)*(180/math.Pi)*(math.Atan2(float64((rl.GetMouseX()-int32((width/2)-5))),float64(rl.GetMouseY()-int32((height/2)-5))))+90),1,rl.White)
 		// Additional Stuff End
 
 		rl.EndMode2D()
@@ -122,5 +124,12 @@ func main() {
 		rl.DrawText(text,0 ,0 ,5 ,rl.RayWhite)
 		rl.EndDrawing()
 	}
+	// Game Loop End
+	// Removing Textures and Images from Memory
+	rl.UnloadImage(player_image)
+	rl.UnloadImage(wand_image)
+	rl.UnloadTexture(player_texture)
+	rl.UnloadTexture(wand_texture)
+	// Removing Textures and Image End
 	rl.CloseWindow()
 }
